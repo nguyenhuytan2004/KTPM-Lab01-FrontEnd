@@ -1,4 +1,4 @@
-const Home = () => {
+const Home = ({ username, handleLogout }) => {
     return (
         <div className="min-h-screen w-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-600 flex flex-col items-center px-4">
             {/* Header with logo and 2 buttons login and register */}
@@ -8,20 +8,34 @@ const Home = () => {
                     alt="Cinema Logo"
                     className="w-16 h-16 mr-4"
                 />
-                <div className="flex space-x-4">
-                    <a
-                        href="/login"
-                        className="bg-white hover:bg-gray-300 text-violet-700  font-semibold py-2 px-4 rounded-full shadow transition duration-200"
-                    >
-                        Đăng nhập
-                    </a>
-                    <a
-                        href="/register"
-                        className="bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 px-4 rounded-full shadow transition duration-200"
-                    >
-                        Đăng ký
-                    </a>
-                </div>
+                {username ? (
+                    <div>
+                        <span className="text-white font-semibold mr-4">
+                            Xin chào, {username}!
+                        </span>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-white hover:bg-gray-300 text-violet-700 font-semibold py-2 px-4 rounded-full shadow transition duration-200 cursor-pointer"
+                        >
+                            Đăng xuất
+                        </button>
+                    </div>
+                ) : (
+                    <div className="flex space-x-4">
+                        <a
+                            href="/login"
+                            className="bg-white hover:bg-gray-300 text-violet-700  font-semibold py-2 px-4 rounded-full shadow transition duration-200"
+                        >
+                            Đăng nhập
+                        </a>
+                        <a
+                            href="/register"
+                            className="bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 px-4 rounded-full shadow transition duration-200"
+                        >
+                            Đăng ký
+                        </a>
+                    </div>
+                )}
             </div>
             <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center">
                 <img

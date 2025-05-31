@@ -1,17 +1,40 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 const App = () => {
+    const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("username");
+        setUsername("");
+        navigate("/login");
+    };
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route
+                path="/"
+                element={
+                    <Home username={username} handleLogout={handleLogout} />
+                }
+            />
+            <Route
+                path="/login"
+                element={<Login setUsername={setUsername} />}
+            />
+            <Route path="/register" element={<Register />} />
+        </Routes>
     );
 };
 

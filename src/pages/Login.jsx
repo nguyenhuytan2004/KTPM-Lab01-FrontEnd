@@ -1,4 +1,39 @@
-const Login = () => {
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Login = ({ setUsername }) => {
+    const [inputUsername, setInputUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(
+                "http://localhost:8080/api/user/login",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: inputUsername,
+                        password: password,
+                    }),
+                },
+            );
+            const data = await response.text();
+            if (response.ok) {
+                localStorage.setItem("username", inputUsername);
+                setUsername(inputUsername);
+                navigate("/");
+            } else {
+                setMessage(data);
+            }
+        } catch (error) {
+            setMessage("Internal server error.");
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-violet-600 px-4">
             <div className="bg-white/90 rounded-3xl shadow-2xl p-8 w-full max-w-md flex flex-col items-center">
@@ -10,20 +45,25 @@ const Login = () => {
                 <h2 className="text-3xl font-bold text-violet-700 mb-6">
                     Đăng nhập
                 </h2>
-                <form className="w-full flex flex-col gap-4">
+                <form
+                    className="w-full flex flex-col gap-4"
+                    onSubmit={handleSubmit}
+                >
                     <div>
                         <label
                             className="block text-gray-700 font-semibold mb-1"
-                            htmlFor="email"
+                            htmlFor="username"
                         >
-                            Email
+                            Username
                         </label>
                         <input
-                            id="email"
-                            type="email"
+                            id="username"
+                            type="text"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
-                            placeholder="Nhập email"
+                            placeholder="Nhập tên đăng nhập"
                             required
+                            value={inputUsername}
+                            onChange={(e) => setInputUsername(e.target.value)}
                         />
                     </div>
                     <div>
@@ -39,15 +79,22 @@ const Login = () => {
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
                             placeholder="Nhập mật khẩu"
                             required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="mt-2 bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 rounded-full shadow transition duration-200"
+                        className="mt-2 bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 rounded-full shadow transition duration-200 cursor-pointer"
                     >
                         Đăng nhập
                     </button>
                 </form>
+                {message && (
+                    <div className="mt-4 text-red-600 font-semibold">
+                        {message}
+                    </div>
+                )}
                 <div className="mt-4 text-sm text-gray-600">
                     Chưa có tài khoản?{" "}
                     <a
