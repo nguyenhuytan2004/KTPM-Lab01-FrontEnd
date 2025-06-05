@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Showtimes from "./pages/Showtimes";
+import Seats from "./pages/seats";
 
 const App = () => {
     const [username, setUsername] = useState("");
@@ -36,6 +37,7 @@ const App = () => {
                 element={<Login setUsername={setUsername} />}
             />
             <Route path="/register" element={<Register />} />
+            <Route path="/seats" element={<Seats />} />
         </Routes>
     );
 };

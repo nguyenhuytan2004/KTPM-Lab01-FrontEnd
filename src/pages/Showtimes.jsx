@@ -43,10 +43,14 @@ const Showtimes = () => {
                     {showtimes.map((showtime) => (
                         <button
                             key={showtime.id}
+                            onClick={() =>
+                                navigate("/seats", {
+                                    state: { movie, showtime },
+                                })
+                            }
                             className="bg-violet-600 hover:bg-violet-800 text-white px-4 py-2 rounded-full font-semibold cursor-pointer transition duration-200"
                         >
-                            {showtime.startTime.slice(0, 5)} -{" "}
-                            {showtime.endTime.slice(0, 5)}
+                            {showtime.startTime.slice(0, 5)} - {showtime.endTime.slice(0, 5)}
                         </button>
                     ))}
                 </div>
