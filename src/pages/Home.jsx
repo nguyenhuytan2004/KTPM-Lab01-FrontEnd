@@ -1,4 +1,18 @@
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 const Home = ({ username, handleLogout }) => {
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/movies")
+            .then((response) => response.json())
+            .then((data) => {
+                setMovies(data);
+            })
+            .catch((error) => console.error("Error fetching movies:", error));
+    }, []);
+
     return (
         <div className="min-h-screen w-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-600 flex flex-col items-center px-4">
             {/* Header with logo and 2 buttons login and register */}
@@ -37,7 +51,8 @@ const Home = ({ username, handleLogout }) => {
                     </div>
                 )}
             </div>
-            <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center">
+            {/* Banner */}
+            <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center mb-10">
                 <img
                     src="https://cdn-icons-png.flaticon.com/512/683/683096.png"
                     alt="Cinema Logo"
@@ -52,35 +67,37 @@ const Home = ({ username, handleLogout }) => {
                     Khám phá các bộ phim hot, chọn suất chiếu và vị trí yêu
                     thích của bạn!
                 </p>
-                <a
-                    href="/booking"
-                    className="bg-violet-700 hover:bg-violet-800 text-white font-semibold py-3 px-8 rounded-full text-lg shadow transition duration-200"
-                >
-                    Đặt vé ngay
-                </a>
             </div>
-            <div className="mt-12 grid grid-cols-3 gap-8 w-full max-w-5xl">
-                <div className="bg-white/80 rounded-xl p-6 flex flex-col items-center shadow">
-                    <span className="text-3xl mb-2">🎬</span>
-                    <h2 className="font-bold text-xl mb-1">Phim mới nhất</h2>
-                    <p className="text-gray-600 text-center">
-                        Cập nhật liên tục các bộ phim bom tấn, đa dạng thể loại.
-                    </p>
-                </div>
-                <div className="bg-white/80 rounded-xl p-6 flex flex-col items-center shadow">
-                    <span className="text-3xl mb-2">🕒</span>
-                    <h2 className="font-bold text-xl mb-1">Chọn suất chiếu</h2>
-                    <p className="text-gray-600 text-center">
-                        Linh hoạt lựa chọn thời gian và rạp chiếu phù hợp.
-                    </p>
-                </div>
-                <div className="bg-white/80 rounded-xl p-6 flex flex-col items-center shadow">
-                    <span className="text-3xl mb-2">💺</span>
-                    <h2 className="font-bold text-xl mb-1">Đặt chỗ dễ dàng</h2>
-                    <p className="text-gray-600 text-center">
-                        Chọn vị trí ngồi yêu thích chỉ với vài cú click.
-                    </p>
-                </div>
+            {/* Movie List */}
+            <div className="grid grid-cols-5 gap-8 w-full max-w-6xl mb-16">
+                {movies.map((movie) => (
+                    <div
+                        key={movie.id}
+                        className="bg-white/90 rounded-xl p-4 flex flex-col items-center shadow-lg"
+                    >
+                        <img
+                            src={movie.poster}
+                            alt={movie.name}
+                            className="w-40 h-60 object-cover rounded-lg mb-4"
+                        />
+                        <h2 className="font-bold text-lg mb-2 text-center">
+                            {movie.name}
+                        </h2>
+                        <p className="text-orange-600 text-center mb-1 mt-auto">
+                            Thời lượng: {movie.duration} phút
+                        </p>
+                        <p className="text-gray-600 text-center mb-4">
+                            {movie.description}
+                        </p>
+                        <Link
+                            to={`/movies/${movie.id}/showtimes`}
+                            state={{ movie }}
+                            className="bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 px-6 rounded-full shadow transition duration-200 mt-auto"
+                        >
+                            Đặt vé
+                        </Link>
+                    </div>
+                ))}
             </div>
         </div>
     );

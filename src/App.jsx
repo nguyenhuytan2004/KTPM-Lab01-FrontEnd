@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Showtimes from "./pages/Showtimes";
 
 const App = () => {
     const [username, setUsername] = useState("");
@@ -29,6 +30,7 @@ const App = () => {
                     <Home username={username} handleLogout={handleLogout} />
                 }
             />
+            <Route path="/movies/:movieId/showtimes" element={<Showtimes />} />
             <Route
                 path="/login"
                 element={<Login setUsername={setUsername} />}
