@@ -9,7 +9,9 @@ const Showtimes = () => {
     const [showtimes, setShowtimes] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/movies/${movie.id}/showtimes`)
+        fetch(
+            `https://ktpm-lab01-movieservice.onrender.com/api/movies/${movie.id}/showtimes`,
+        )
             .then((response) => response.json())
             .then((data) => {
                 console.log("Showtimes fetched:", data);
