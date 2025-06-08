@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Showtimes from "./pages/Showtimes";
-import Seats from "./pages/seats";
+import Seats from "./pages/Seats";
 
 const App = () => {
     const [username, setUsername] = useState("");
