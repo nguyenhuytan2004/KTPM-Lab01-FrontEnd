@@ -11,7 +11,7 @@ const Login = ({ setUsername }) => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "https://ktpm-lab01-userservice.onrender.com/api/user/login",
+                "https://ktpm-lab01-apigateway.onrender.com/api/user/login",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

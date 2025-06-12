@@ -10,7 +10,7 @@ const Showtimes = () => {
 
     useEffect(() => {
         fetch(
-            `https://ktpm-lab01-movieservice.onrender.com/api/movies/${movie.id}/showtimes`,
+            `https://ktpm-lab01-apigateway.onrender.com/api/movies/${movie.id}/showtimes`,
         )
             .then((response) => response.json())
             .then((data) => {
@@ -50,7 +50,8 @@ const Showtimes = () => {
                             }
                             className="bg-violet-600 hover:bg-violet-800 text-white px-4 py-2 rounded-full font-semibold cursor-pointer transition duration-200"
                         >
-                            {showtime.startTime.slice(0, 5)} - {showtime.endTime.slice(0, 5)}
+                            {showtime.startTime.slice(0, 5)} -{" "}
+                            {showtime.endTime.slice(0, 5)}
                         </button>
                     ))}
                 </div>

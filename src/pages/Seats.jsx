@@ -17,15 +17,18 @@ const Seats = () => {
         }
     }
 
-    const formatTime = (timeStr) => (timeStr.length === 5 ? `${timeStr}:00` : timeStr);
+    const formatTime = (timeStr) =>
+        timeStr.length === 5 ? `${timeStr}:00` : timeStr;
     const startTime = formatTime(showtime?.startTime || "");
     const endTime = formatTime(showtime?.endTime || "");
 
     const fetchBookedSeats = () => {
-        fetch(`https://seatserver.onrender.com/api/seats?startTime=${startTime}&endTime=${endTime}`)
+        fetch(
+            `https://ktpm-lab01-apigateway.onrender.com/api/seats?startTime=${startTime}&endTime=${endTime}`,
+        )
             .then((res) => res.json())
             .then((data) => {
-                const booked = new Set(data.map(seat => seat.seatCode));
+                const booked = new Set(data.map((seat) => seat.seatCode));
                 setBookedSeats(booked);
             })
             .catch((err) => {
@@ -44,10 +47,14 @@ const Seats = () => {
     };
 
     const confirmBooking = () => {
-        fetch("https://paymentserver-wtw6.onrender.com/api/book", {
+        fetch("https://ktpm-lab01-apigateway.onrender.com/api/book", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ seatCode: selectedSeat, startTime, endTime })
+            body: JSON.stringify({
+                seatCode: selectedSeat,
+                startTime,
+                endTime,
+            }),
         })
             .then((res) => {
                 if (!res.ok) throw new Error("Đặt chỗ thất bại");
@@ -75,7 +82,8 @@ const Seats = () => {
                     Chọn chỗ ngồi cho: {movie?.title}
                 </h2>
                 <p className="text-center text-gray-600 mb-6">
-                    Giờ chiếu: {showtime?.startTime?.slice(0, 5)} - {showtime?.endTime?.slice(0, 5)}
+                    Giờ chiếu: {showtime?.startTime?.slice(0, 5)} -{" "}
+                    {showtime?.endTime?.slice(0, 5)}
                 </p>
 
                 <div className="grid grid-cols-9 gap-2 justify-center items-center mb-6">
@@ -107,29 +115,31 @@ const Seats = () => {
 
             {/* Popup xác nhận đặt chỗ */}
             {selectedSeat && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-                {/* Bỏ lớp nền đen, chỉ popup */}
-                <div 
-                className="bg-white rounded-lg p-6 max-w-sm w-full text-center shadow-lg pointer-events-auto"
-                >
-                <h3 className="text-xl font-semibold mb-4">Xác nhận đặt chỗ {selectedSeat}</h3>
-                <p className="mb-6">Giá vé: <strong>70,000 VND</strong></p>
-                <div className="flex justify-around">
-                    <button
-                    onClick={confirmBooking}
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-                    >
-                    Xác nhận
-                    </button>
-                    <button
-                    onClick={cancelBooking}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-                    >
-                    Hủy
-                    </button>
+                <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+                    {/* Bỏ lớp nền đen, chỉ popup */}
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full text-center shadow-lg pointer-events-auto">
+                        <h3 className="text-xl font-semibold mb-4">
+                            Xác nhận đặt chỗ {selectedSeat}
+                        </h3>
+                        <p className="mb-6">
+                            Giá vé: <strong>70,000 VND</strong>
+                        </p>
+                        <div className="flex justify-around">
+                            <button
+                                onClick={confirmBooking}
+                                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                            >
+                                Xác nhận
+                            </button>
+                            <button
+                                onClick={cancelBooking}
+                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                            >
+                                Hủy
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
             )}
         </div>
     );

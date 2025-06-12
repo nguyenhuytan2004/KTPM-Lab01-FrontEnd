@@ -12,7 +12,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "https://ktpm-lab01-userservice.onrender.com/api/user/register",
+                "https://ktpm-lab01-apigateway.onrender.com/api/user/register",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
