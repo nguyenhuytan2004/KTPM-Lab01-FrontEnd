@@ -24,7 +24,7 @@ const Seats = () => {
 
     const fetchBookedSeats = () => {
         fetch(
-            `https://ktpm-lab01-apigateway.onrender.com/api/seats?startTime=${startTime}&endTime=${endTime}`,
+            `http://localhost:8080/api/seats?startTime=${startTime}&endTime=${endTime}`,
         )
             .then((res) => res.json())
             .then((data) => {
@@ -47,7 +47,7 @@ const Seats = () => {
     };
 
     const confirmBooking = () => {
-        fetch("https://ktpm-lab01-apigateway.onrender.com/api/book", {
+        fetch("http://localhost:8080/api/book", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

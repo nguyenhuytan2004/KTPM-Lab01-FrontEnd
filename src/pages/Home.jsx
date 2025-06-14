@@ -5,7 +5,7 @@ const Home = ({ username, handleLogout }) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        fetch("https://ktpm-lab01-apigateway.onrender.com/api/movies")
+        fetch("http://localhost:8080/api/movies")
             .then((response) => response.json())
             .then((data) => {
                 setMovies(data);
