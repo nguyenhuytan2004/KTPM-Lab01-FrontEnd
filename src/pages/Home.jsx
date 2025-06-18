@@ -5,7 +5,7 @@ const Home = ({ username, handleLogout }) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/movies")
+        fetch("http://34.87.22.52/api/movies")
             .then((response) => response.json())
             .then((data) => {
                 setMovies(data);

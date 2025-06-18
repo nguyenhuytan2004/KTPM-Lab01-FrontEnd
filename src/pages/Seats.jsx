@@ -24,7 +24,7 @@ const Seats = () => {
 
     const fetchBookedSeats = () => {
         fetch(
-            `http://localhost:8080/api/seats?startTime=${startTime}&endTime=${endTime}`,
+            `http://34.87.22.52/api/seats?startTime=${startTime}&endTime=${endTime}`,
         )
             .then((res) => res.json())
             .then((data) => {

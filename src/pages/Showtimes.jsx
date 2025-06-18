@@ -9,7 +9,7 @@ const Showtimes = () => {
     const [showtimes, setShowtimes] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/movies/${movie.id}/showtimes`)
+        fetch(`http://34.87.22.52/api/movies/${movie.id}/showtimes`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("Showtimes fetched:", data);

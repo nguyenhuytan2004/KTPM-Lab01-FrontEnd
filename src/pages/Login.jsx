@@ -11,7 +11,7 @@ const Login = ({ setUsername }) => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "http://localhost:8080/api/user/login",
+                "http://34.87.22.52/api/user/login",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

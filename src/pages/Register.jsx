@@ -12,7 +12,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "http://localhost:8080/api/user/register",
+                "http://34.87.22.52/api/user/register",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
